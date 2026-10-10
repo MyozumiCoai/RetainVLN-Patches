@@ -5,6 +5,8 @@ A simple VLN work for anti-forgetting, whose baseline is [NaVILA](https://github
 
 The directory tree mirrors the NaVILA repository: merge `evaluation/` and `scripts/` into your NaVILA root and everything is importable in place.
 
+Here "M4a" is the internal name of the LTS module in the paper, while "M4b" stands for LTS++（though it isn't included in this repository).
+
 ```graphql
 ├─ evaluation
 |   ├─ navila_patches          # monkey-patch overlay (sits beside vlnce_baselines)
@@ -63,7 +65,7 @@ main()
 ```
 
 * **M0 baseline** — `EVAL_CKPT_PATH_DIR=$NAVILA_BASE_CKPT` with `NAVI_MEMORY=off`.
-* **M4a memory(aka LTS in the paper)** — same base checkpoint with `NAVI_MEMORY=level1 NAVI_MEMORY_BUDGET=400`.
+* **M4a memory** — same base checkpoint with `NAVI_MEMORY=level1 NAVI_MEMORY_BUDGET=400`.
 * **KL-GRPO** — merged checkpoint (see below) with `NAVI_MEMORY=level1 NAVI_MEMORY_BUDGET=400` (the validated 53.4 recipe).
 
 On a multi-GPU machine, use the sharded chain instead (8 chunks, automatic retry for missing shards; edit the paths at the top of the script first):
@@ -83,9 +85,7 @@ T1_MERGED_OUT=/path/to/navila-8b-8f-grpo-merged \
 python scripts/grpo/merge_lora.py
 ```
 
-Our own LoRA will be soon updated at HuggingFace.
-
-(The `T1_*` environment variable names are historical; the script merges any LLM-only LoRA adapter of this project.)
+Our own trained LoRA has been updated on ModelScope, and you can download it at [RetainVLN-Patches](https://www.modelscope.cn/models/MyozumiCoai/retainvln-patches/files).
 
 ### Metrics
 
@@ -137,4 +137,4 @@ Reward: pure discrete ground-truth action matching (v1). Progress-based and stop
 
 ## 📜 Acknowledgement
 
-Built on [NaVILA](https://github.com/NVlabs/NaVILA) (RSS'25) and [VLN-CE](https://github.com/jacobkrantz/VLN-CE).
+Built on [NaVILA](https://github.com/NVlabs/NaVILA) (RSS'25) and [VLN-CE](https://github.com/jacobkrantz/VLN-CE). Thanks again for their great contribution to VLN.
